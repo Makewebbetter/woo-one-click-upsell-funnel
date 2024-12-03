@@ -79,7 +79,7 @@ class Woocommerce_One_Click_Upsell_Funnel {
 		if ( defined( 'WPS_WOCUF_VERSION' ) ) {
 			$this->version = WPS_WOCUF_VERSION;
 		} else {
-			$this->version = '3.4.9';
+			$this->version = '3.5.0';
 		}
 
 		$this->plugin_name = 'woocommerce-one-click-upsell-funnel';
@@ -149,6 +149,21 @@ class Woocommerce_One_Click_Upsell_Funnel {
 
 			$this->onboard = new WPSwings_Onboarding_Helper();
 		}
+
+		/**
+		 * The file responsible for handling Official stripe compatibility with seperate
+		 * payments order.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'gateways/compatibilities/class-wps-stripe-payment-gateway.php';
+
+		/**
+		 * The file responsible for defining Woocommerce Subscriptions compatibility
+		 * and handling functions.
+		 */
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-one-click-upsell-funnel-org-subs-comp.php';
+
+
+
 
 		/**
 		 * The file responsible for Upsell Sales by Funnel - Data handling and Stats.

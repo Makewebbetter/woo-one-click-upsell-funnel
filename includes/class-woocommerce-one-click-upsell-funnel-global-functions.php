@@ -27,6 +27,22 @@ function wps_upsell_lite_elementor_plugin_active() {
 	}
 }
 
+/**
+ * Some payment methods process the order before upsell.
+ * Smart offer upgrade works diffrently for this.
+ *
+ * @since    3.5.0
+ */
+function wps_supported_gateways_with_upsell_parent_order() {
+
+	$supported_gateways = array(
+		'stripe', // official stripe.
+
+	);
+
+	return apply_filters( 'wps_wocuf_pro_supported_gateways_with_upsell_parent_order', $supported_gateways );
+}
+
 
 /**
  * Check if Divi Builder plugin is active or not.
@@ -432,6 +448,7 @@ function wps_upsell_lite_supported_gateways() {
 
 	$supported_gateways = array(
 		'cod', // Cash on delivery.
+		'stripe'
 	);
 
 	return apply_filters( 'wps_upsell_lite_supported_gateways', $supported_gateways );
@@ -462,7 +479,6 @@ function wps_upsell_pro_supported_gateways() {
 		'square_credit_card', // Official Square-XL plugins.
 		'braintree_cc', // Official Braintree for Woocommerce plugins.
 		'paypal_express', // Angeleye Paypal Express Checkout.
-		'stripe', // Official Stripe - CC.
 		'', // For Free Product.
 		'ppcp-gateway', // For Paypal payments plugin.
 		'ppcp-credit-card-gateway', // For Paypal CC payments plugin.
@@ -737,7 +753,7 @@ function wps_upsee_lite_go_pro( $location = 'pro' ) {
 
 	} else {
 
-		$message = esc_html__( 'Stucked to just one Order Funnel? Unlock your power to explore more.', 'woo-one-click-upsell-funnel' );
+		$message = esc_html__( 'Stucked to limited Order Funnel? Unlock your power to explore more.', 'woo-one-click-upsell-funnel' );
 	}
 
 	ob_start();

@@ -7,7 +7,7 @@ Requires at least: 5.5.0
 Tested up to: 6.6.2
 WC requires at least: 6.5.0
 WC tested up to: 9.3.3
-Stable tag: 3.4.9
+Stable tag: 3.5.0
 Requires PHP: 7.0.0
 License: GPLv3 or later 
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -315,7 +315,7 @@ Please visit [**WooCommerce Upsell Knowledge Base**](https://support.wpswings.co
 
 == Changelog ==
 
-= 3.4.9 – Released on 29 Oct 2024 =
+= 3.5.0 – Released on 29 Oct 2024 =
 * New : Compatible with latest WP ( 6.6.2 ) & WC ( 9.3.3 )
 * Fix : Minor bug fixes
 
@@ -486,6 +486,6 @@ Please visit [**WooCommerce Upsell Knowledge Base**](https://support.wpswings.co
 
 == Upgrade Notice ==
 
-= 3.4.9 – Released on 29 Oct 2024 =
+= 3.5.0 – Released on 29 Oct 2024 =
 * New : Compatible with latest WP ( 6.6.2 ) & WC ( 9.3.3 )
 * Fix : Minor bug fixes

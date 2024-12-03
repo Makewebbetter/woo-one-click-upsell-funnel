@@ -234,10 +234,29 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 </div>
 
 <br>
+<input type='hidden' id='wps_ubo_pro_status' value='inactive'>
+		<?php wps_upsee_lite_go_pro( 'org' ); ?>
+		<?php wps_upsee_lite_product_offer_go_pro( 'org' ); ?>
+
 
 <!-- Create New Funnel -->
 <div class="wps_wocuf_pro_create_new_funnel">
+<?php
+
+if (  $wps_wocuf_pro_funnel_number < 2 ){
+
+	?>
 	<a href="?page=wps-wocuf-setting&manage_nonce=<?php echo esc_html( wp_create_nonce( 'manage_funnel' ) ); ?>&tab=creation-setting&funnel_id=<?php echo esc_html( $wps_wocuf_pro_funnel_number + 1 ); ?>"><?php esc_html_e( '+Create New Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
+	<?php
+} else{
+	?>
+	<a href="#" disabled="disabled" class="ubo_offer_input"> <?php esc_html_e( '+Create New Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
+	<span class="wps_wocuf_pro_enable_plugin_span"></span>
+	<?php
+
+}
+?>
+	
 	<?php
 
 
