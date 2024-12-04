@@ -188,9 +188,9 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$payment_method = $order->get_payment_method();
 
 		$supported_gateways = wps_upsell_lite_supported_gateways();
-
+		
 		if ( in_array( $payment_method, $supported_gateways, true ) ) {
-
+		
 			$wps_wocuf_pro_all_funnels = get_option( 'wps_wocuf_funnels_list', array() );
 
 			$wps_wocuf_pro_flag = 0;
@@ -198,8 +198,10 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 			$wps_wocuf_pro_proceed = false;
 
 			if ( empty( $wps_wocuf_pro_all_funnels ) ) {
+			
 				return;
 			} elseif ( empty( $order ) ) {
+				
 				return;
 			}
 
@@ -240,6 +242,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						$is_global_funnel = ! empty( $wps_wocuf_pro_funnel_data['wps_wocuf_global_funnel'] ) && 'yes' === $wps_wocuf_pro_funnel_data['wps_wocuf_global_funnel'] ? $wps_wocuf_pro_funnel_data['wps_wocuf_global_funnel'] : false;
 
 						$wps_wocuf_pro_funnel_target_products = ! empty( $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['wps_wocuf_target_pro_ids'] ) ? $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['wps_wocuf_target_pro_ids'] : array();
+						$funnel_target_product_categories = ! empty( $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['target_categories_ids'] ) ? $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['target_categories_ids'] : array();
 
 						$wps_wocuf_pro_existing_offers = ! empty( $wps_wocuf_pro_funnel_data['wps_wocuf_applied_offer_number'] ) ? $wps_wocuf_pro_funnel_data['wps_wocuf_applied_offer_number'] : array();
 
@@ -259,7 +262,26 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 								$wps_wocuf_pro_product_id = $wps_wocuf_pro_single_item->get_product_id();
 
-								if ( in_array( (string) $wps_wocuf_pro_product_id, $wps_wocuf_pro_funnel_target_products, true ) || ( ! empty( $wps_wocuf_pro_variation_id ) && in_array( (string) $wps_wocuf_pro_variation_id, $wps_wocuf_pro_funnel_target_products, true ) ) || ( $is_global_funnel ) ) {
+								$product_categories = array();
+
+								if ( ! empty( $funnel_target_product_categories ) ) {
+
+									$product_cat_obj_array = get_the_terms( $wps_wocuf_pro_product_id, 'product_cat' );
+
+									if ( ! empty( $product_cat_obj_array ) && is_array( $product_cat_obj_array ) && count( $product_cat_obj_array ) ) {
+
+										foreach ( $product_cat_obj_array as $product_cat_obj ) {
+
+											if ( ! empty( $product_cat_obj->term_id ) ) {
+
+												$product_categories[] = $product_cat_obj->term_id;
+											}
+										}
+									}
+								}
+
+
+								if ( in_array( (string) $wps_wocuf_pro_product_id, $wps_wocuf_pro_funnel_target_products, true ) || ( ! empty( $wps_wocuf_pro_variation_id ) && in_array( (string) $wps_wocuf_pro_variation_id, $wps_wocuf_pro_funnel_target_products, true ) ) || ( $is_global_funnel ) || ( ! empty( $product_categories ) && ! empty( array_intersect( $product_categories, $funnel_target_product_categories ) ) )  ) {
 
 									// Check if funnel is saved after version 3.0.0.
 									$funnel_saved_after_version_3 = ! empty( $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['wps_upsell_fsav3'] ) ? $wps_wocuf_pro_all_funnels[ $wps_wocuf_pro_single_funnel ]['wps_upsell_fsav3'] : '';
@@ -596,7 +618,8 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 					$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 
-
+				
+					
 				
 					if ( 'stripe' === $payment_method ) {
 
@@ -726,7 +749,8 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 					} else{
 						// For cron - Upsell is initialized. As just going to Redirect.
 						wps_wocfo_hpos_update_meta_data( $order_id, 'wps_ocufp_upsell_initialized', time() );
-
+						
+						
 						$this->initial_redirection_to_upsell_offer_and_triggers( $order_id, $wps_wocuf_pro_single_funnel, $result );
 
 					}
@@ -742,7 +766,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 			return;
 
 		}
-
+		
 	}
 
 	/**
@@ -1693,10 +1717,14 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		} else{
 			// For cron - Payment initialized.
 			wps_wocfo_hpos_delete_meta_data( $order_id, 'wps_ocufp_upsell_initialized' );
-
+			$result = '';
 			$payment_method = $order->get_payment_method();
 
-			$result = $gateways[ $payment_method ]->process_payment( $order_id, 'true' );
+
+			if ( ! empty( $payment_method ) ) {
+				$result = $gateways[ $payment_method ]->process_payment( $order_id, 'true' );
+			}
+ 		
 			$order->reduce_order_stock();
 			return $result;
 		}

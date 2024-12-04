@@ -98,13 +98,6 @@ function wps_upsell_org_is_subscription_product( $product ) {
 function wps_upsell_org_subs_supported_gateways() {
 
 	$subs_supported_gateways = array(
-		'wps-wocuf-pro-stripe-gateway', // Stripe-One-Click-Upsell.
-		'paypal', // Official Paypal.
-		'ppec_paypal', // Official Paypal Express Checkout.
-		'authorize_net_cim_credit_card', // Official Authorize.Net-CC.
-		'square_credit_card', // Official Square-XL plugins.
-		'braintree_cc', // Official Braintree for Woocommerce plugins.
-		'paypal_express', // Angeleye Paypal Express Checkout.
 		'stripe', // Official Stripe-CC.
 	);
 

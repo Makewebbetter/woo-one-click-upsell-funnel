@@ -57,6 +57,37 @@ jQuery(document).ready( function($) {
 		minimumInputLength: 3 // the minimum of symbols to input before perform a search
 	});
 
+	// Target Categories Search.
+	jQuery('.wc-funnel-product-category-search').select2({
+		ajax:{
+			  url: ajaxurl,
+			  dataType: 'json',
+			  delay: 200,
+			  data: function (params) {
+					return {
+					  q: params.term,
+					  action: 'search_product_categories_for_funnel'
+					};
+			  },
+			  processResults: function( data ) {
+			  var options = [];
+			  if ( data ) 
+			  {
+				  $.each( data, function( index, text )
+				  {
+					  text[1]+='( #'+text[0]+')';
+					  options.push( { id: text[0], text: text[1]  } );
+				  });
+			  }
+			  return {
+				  results:options
+			  };
+		  },
+		  cache: true
+	  },
+	  minimumInputLength: 3 // the minimum of symbols to input before perform a search
+  });
+
 	jQuery('.wc-offer-product-search').select2({
   		ajax:{
     			url :wps_upsell_lite_js_obj.ajaxurl,

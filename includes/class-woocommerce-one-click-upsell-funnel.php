@@ -222,6 +222,7 @@ class Woocommerce_One_Click_Upsell_Funnel {
 		$this->loader->add_action( 'wp_ajax_seach_products_for_offers', $plugin_admin, 'seach_products_for_offers' );
 
 		$this->loader->add_action( 'wp_ajax_seach_products_for_funnel', $plugin_admin, 'seach_products_for_funnel' );
+		$this->loader->add_action( 'wp_ajax_search_product_categories_for_funnel', $plugin_admin, 'search_product_categories_for_funnel' );
 
 		// Init migrator.
 		$this->loader->add_action( 'wp_ajax_wps_upsell_init_migrator', $plugin_admin, 'wps_upsell_init_migrator' );

@@ -959,7 +959,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$search_results = new WP_Query(
 			array(
 				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => array( 'product' ),
+				'post_type'           => array( 'product', 'product_variation' ),
 				'post_status'         => array( 'publish' ),
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => -1,
@@ -980,15 +980,23 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 				 */
 				$post_type = get_post_type( $search_results->post->ID );
 
-				if ( 'product' !== $post_type ) {
+				if ( 'product' !== $post_type && 'product_variation' !== $post_type ) {
+
 					continue;
 				}
 
 				$product      = wc_get_product( $search_results->post->ID );
 				$downloadable = $product->is_downloadable();
 				$stock        = $product->get_stock_status();
+				$product_type = $product->get_type();
 
-				if ( $product->is_type( 'variable' ) || $product->is_type( 'subscription' ) || $product->is_type( 'grouped' ) || $product->is_type( 'external' ) || 'outofstock' === $stock ) {
+				$unsupported_product_types = array(
+					'grouped',
+					'external',
+				);
+
+				if ( in_array( $product_type, $unsupported_product_types, true ) || 'outofstock' === $stock ) {
+
 					continue;
 				}
 
@@ -997,6 +1005,44 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 			endwhile;
 
 		endif;
+
+		echo wp_json_encode( $return );
+
+		wp_die();
+	}
+
+	/**
+	 * Select2 search for adding funnel target product categories
+	 *
+	 * @since    3.0.1
+	 */
+	public function search_product_categories_for_funnel() {
+		$return = array();
+
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+		}
+
+		$args = array(
+			'search'   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
+			'taxonomy' => 'product_cat',
+			'orderby'  => 'name',
+		);
+
+		$product_categories = get_terms( $args );
+
+		if ( ! empty( $product_categories ) && is_array( $product_categories ) && count( $product_categories ) ) {
+
+			foreach ( $product_categories as $single_product_category ) {
+
+				$cat_name = ( mb_strlen( $single_product_category->name ) > 50 ) ? mb_substr( $single_product_category->name, 0, 49 ) . '...' : $single_product_category->name;
+
+				$return[] = array( $single_product_category->term_id, $single_product_category->name );
+			}
+		}
 
 		echo wp_json_encode( $return );
 

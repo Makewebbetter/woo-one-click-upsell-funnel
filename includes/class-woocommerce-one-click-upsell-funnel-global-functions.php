@@ -448,7 +448,8 @@ function wps_upsell_lite_supported_gateways() {
 
 	$supported_gateways = array(
 		'cod', // Cash on delivery.
-		'stripe'
+		'stripe',
+		''
 	);
 
 	return apply_filters( 'wps_upsell_lite_supported_gateways', $supported_gateways );

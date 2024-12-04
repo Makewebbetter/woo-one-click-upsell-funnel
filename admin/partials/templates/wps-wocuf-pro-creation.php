@@ -144,6 +144,11 @@ if ( isset( $_POST['wps_wocuf_pro_creation_setting_save'] ) ) {
 
 	$wps_wocuf_pro_funnel['wps_wocuf_target_pro_ids'] = ! empty( $target_pro_ids_array ) ? $target_pro_ids_array : array();
 
+	// Sanitize and strip slashes for Funnel Target products.
+	$target_pro_ids_array = ! empty( $_POST['target_categories_ids'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['target_categories_ids'] ) ) : array();
+
+	$wps_wocuf_pro_funnel['target_categories_ids'] = ! empty( $target_pro_ids_array ) ? $target_pro_ids_array : array();
+
 
 	// Sanitize and strip slashes for Funnel Offer products.
 	$products_in_offer_array = ! empty( $_POST['wps_wocuf_products_in_offer'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['wps_wocuf_products_in_offer'] ) ) : '';
@@ -542,13 +547,6 @@ $wps_wocuf_pro_funnel_schedule_options = array(
 						}
 						?>
 						</select>	
-						&nbsp;
-						<label class="wps_wocuf_pro_enable_plugin_label">
-								<input class="wps_wocuf_pro_enable_plugin_input ubo_offer_input" product_offer="yes" id="wps_wocuf_pro_add_products_tick" type="checkbox" <?php echo ( 'yes' === $wps_wocuf_add_product_tick ) ? "checked='checked'" : ''; ?> name="wps_wocuf_add_products" >	
-								<span class="wps_wocuf_pro_enable_plugin_span"></span>
-							</label>	
-						
-						<span class="wps_upsell_funnel_product_offer_off "><?php esc_html_e( 'Upgrade To Pro For Variable, Subscription And Bundle Type Products', 'woo-one-click-upsell-funnel' ); ?></span>
 						
 					</td>	
 				</tr>
@@ -558,25 +556,45 @@ $wps_wocuf_pro_funnel_schedule_options = array(
 				<tr valign="top">
 
 					<th scope="row" class="titledesc">
-					<span class="wps_wupsell_premium_strip"><?php esc_html_e( 'Pro', 'woo-one-click-upsell-funnel' ); ?></span>
-						<label for="wps_wocuf_pro_target_pro_ids"><?php esc_html_e( 'Select target category(s)', 'woo-one-click-upsell-funnel' ); ?></label>
+						<label for="wps_wocuf_pro_target_pro_ids"><?php esc_html_e( 'Select target category(s)', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></label>
 					</th>
 
 					<td class="forminp forminp-text">
 
 						<?php
 
-						$description = esc_html__( 'If any one of these Target Category Products is checked out then the this funnel will be triggered and the below offers will be shown.', 'woo-one-click-upsell-funnel' );
+						$description = esc_html__( 'If any one of these Target Category Products is checked out then the this funnel will be triggered and the below offers will be shown.', 'one-click-upsell-funnel-for-woocommerce-pro' );
 
 						wps_upsell_lite_wc_help_tip( $description );
 
 						?>
 
-						<select class="wc-funnel-product-search ubo_offer_input" disabled="true" multiple="multiple" style="" name="wps_wocuf_target_category_pro_ids[]" data-placeholder="<?php esc_attr_e( 'Upgrade To Pro For This Feature&hellip;', 'woo-one-click-upsell-funnel' ); ?>">
+						<select class="wc-funnel-product-category-search" multiple="multiple" style="" name="target_categories_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?>">
 
-						
-						</select>
-					
+						<?php
+
+						if ( ! empty( $wps_wocuf_pro_funnel_data ) ) {
+
+							$target_categories_ids = isset( $wps_wocuf_pro_funnel_data[ $wps_wocuf_pro_funnel_id ]['target_categories_ids'] ) ? $wps_wocuf_pro_funnel_data[ $wps_wocuf_pro_funnel_id ]['target_categories_ids'] : array();
+
+							// array_map with absint converts negative array values to positive, so that we dont get negative ids.
+							$target_categories_ids = ! empty( $target_categories_ids ) ? array_map( 'absint', $target_categories_ids ) : null;
+
+							if ( $target_categories_ids ) {
+
+								foreach ( $target_categories_ids as $single_target_category_id ) {
+
+									$single_category_name = get_the_category_by_ID( $single_target_category_id );
+
+									?>
+									<option value="<?php echo esc_html( $single_target_category_id ); ?>" selected="selected" ><?php echo esc_html( $single_category_name ); ?>(#<?php echo esc_html( $single_target_category_id ); ?>)</option>
+									<?php
+								}
+							}
+						}
+
+						?>
+						</select>		
 					</td>	
 				</tr>
 				<!-- Select Target category end -->
