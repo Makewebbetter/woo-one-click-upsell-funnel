@@ -243,7 +243,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 <div class="wps_wocuf_pro_create_new_funnel">
 <?php
 
-if (  $wps_wocuf_pro_funnel_number < 2 ){
+if (  $wps_wocuf_pro_funnel_number < 1 ){
 
 	?>
 	<a href="?page=wps-wocuf-setting&manage_nonce=<?php echo esc_html( wp_create_nonce( 'manage_funnel' ) ); ?>&tab=creation-setting&funnel_id=<?php echo esc_html( $wps_wocuf_pro_funnel_number + 1 ); ?>"><?php esc_html_e( '+Create New Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
