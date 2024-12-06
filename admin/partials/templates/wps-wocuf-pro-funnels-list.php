@@ -239,6 +239,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 		<?php wps_upsee_lite_product_offer_go_pro( 'org' ); ?>
 
 
+		
 <!-- Create New Funnel -->
 <div class="wps_wocuf_pro_create_new_funnel">
 <?php
