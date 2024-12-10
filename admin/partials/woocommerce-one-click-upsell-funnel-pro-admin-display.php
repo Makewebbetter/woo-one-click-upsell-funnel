@@ -35,7 +35,26 @@ if ( 'overview' === get_transient( 'wps_upsell_default_settings_tab' ) ) {
 	$active_tab = isset( $_GET['tab'] ) ? sanitize_text_field( wp_unslash( $_GET['tab'] ) ) : 'overview';
 }
 
+
+$wps_wocuf_pro_funnels_list = get_option( 'wps_wocuf_funnels_list', array() );
+$wps_wocuf_pro_funnel_number = '';
+if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
+
+	// Temp funnel variable.
+	$wps_wocuf_pro_funnel_duplicate = $wps_wocuf_pro_funnels_list;
+
+	// Make key pointer point to the end funnel.
+	end( $wps_wocuf_pro_funnel_duplicate );
+
+	// Now key function will return last funnel key.
+	$wps_wocuf_pro_funnel_number = key( $wps_wocuf_pro_funnel_duplicate );
+} else {
+	// When no funnel is there then new funnel id will be 1 (0+1).
+	$wps_wocuf_pro_funnel_number = 0;
+}
+
 ?>
+
 
 <div class="wps-notice-wrapper">
 <?php do_action( 'wps_wocuf_pro_setting_tab_active', '', '', '' ); ?>
@@ -78,7 +97,26 @@ if ( 'overview' === get_transient( 'wps_upsell_default_settings_tab' ) ) {
 
 
 	<nav class="nav-tab-wrapper woo-nav-tab-wrapper">
-		<a class="nav-tab <?php echo 'creation-setting' === $active_tab ? 'nav-tab-active' : ''; ?>" href="?page=wps-wocuf-setting&tab=creation-setting"><?php esc_html_e( 'Create Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
+
+	<?php
+
+		if (  $wps_wocuf_pro_funnel_number < 1 ){
+
+			?>
+			<a class="nav-tab <?php echo 'creation-setting' === $active_tab ? 'nav-tab-active' : ''; ?>" href="?page=wps-wocuf-setting&tab=creation-setting"><?php esc_html_e( 'Create Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
+			<?php
+		} else{
+			?>
+			<a class="nav-tab ubo_offer_input <?php echo 'creation-setting' === $active_tab ? 'nav-tab-active' : ''; ?>" href="#"><?php esc_html_e( 'Create Funnel', 'woo-one-click-upsell-funnel' ); ?></a>
+			<span class="wps_wocuf_pro_enable_plugin_span"></span>
+			<?php
+
+		}
+	?>
+
+
+
+
 		<a class="nav-tab <?php echo 'funnels-list' === $active_tab ? 'nav-tab-active' : ''; ?>" href="?page=wps-wocuf-setting&tab=funnels-list"><?php esc_html_e( 'Funnels List', 'woo-one-click-upsell-funnel' ); ?></a>
 		<a class="nav-tab <?php echo 'shortcodes' === $active_tab ? 'nav-tab-active' : ''; ?>" href="?page=wps-wocuf-setting&tab=shortcodes"><?php esc_html_e( 'Shortcodes', 'woo-one-click-upsell-funnel' ); ?></a>
 		<a class="nav-tab <?php echo 'store_checkout' === $active_tab ? 'nav-tab-active' : ''; ?>" href="?page=wps-wocuf-setting&tab=store_checkout"><?php esc_html_e( 'Store Checkout', 'woo-one-click-upsell-funnel' ); ?></a>

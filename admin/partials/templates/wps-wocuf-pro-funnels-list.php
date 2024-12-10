@@ -85,7 +85,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 			<tr>
 				<th><?php esc_html_e( 'Funnel Name', 'woo-one-click-upsell-funnel' ); ?></th>
 				<th><?php esc_html_e( 'Status', 'woo-one-click-upsell-funnel' ); ?></th>
-				<th id="wps_upsell_funnel_list_target_th"><?php esc_html_e( 'Target Product(s)', 'woo-one-click-upsell-funnel' ); ?></th>
+				<th ><?php esc_html_e( 'Target Product(s) and Categories', 'woo-one-click-upsell-funnel' ); ?></th>
 				<th><?php esc_html_e( 'Offers', 'woo-one-click-upsell-funnel' ); ?></th>
 				<th><?php esc_html_e( 'Action', 'woo-one-click-upsell-funnel' ); ?></th>
 				<?php do_action( 'wps_wocuf_pro_funnel_add_more_col_head' ); ?>
@@ -149,18 +149,29 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 					</td>
 
 					<!-- Funnel Target products. -->
+				
+
 					<td>
 						<?php
 
+						// Target Product(s).
+
 						if ( ! empty( $value['wps_wocuf_target_pro_ids'] ) ) {
+
+							echo '<p><i>' . esc_html__( 'Target Product(s) -', 'one-click-upsell-funnel-for-woocommerce-pro' ) . '</i></p>';
 
 							echo '<div class="wps_upsell_funnel_list_targets">';
 
 							foreach ( $value['wps_wocuf_target_pro_ids'] as $single_target_product ) :
 
 								$product = wc_get_product( $single_target_product );
+
+								if ( empty( $product ) ) {
+
+									continue;
+								}
 								?>
-								<p><?php echo esc_html( $product->get_title() ) . '( #' . esc_html( $single_target_product ) . ' )'; ?></p>
+								<p><?php echo esc_html( $product->get_title() . "( #$single_target_product )" ); ?></p>
 								<?php
 
 							endforeach;
@@ -170,10 +181,45 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 
 							?>
 
-							<p><?php esc_html_e( 'No product(s) added', 'woo-one-click-upsell-funnel' ); ?></p>
+							<p><i><?php esc_html_e( 'No Product(s) added', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></i></p>
 
 							<?php
 						}
+
+						echo '<hr>';
+
+						// Target Categories.
+
+						if ( ! empty( $value['target_categories_ids'] ) ) {
+
+							echo '<p><i>' . esc_html__( 'Target Categories -', 'one-click-upsell-funnel-for-woocommerce-pro' ) . '</i></p>';
+
+							echo '<div class="wps_upsell_funnel_list_targets">';
+
+							foreach ( $value['target_categories_ids'] as $single_target_category_id ) :
+
+								$category_name = get_the_category_by_ID( $single_target_category_id );
+
+								if ( empty( $category_name ) ) {
+
+									continue;
+								}
+								?>
+								<p><?php echo esc_html( $category_name . "( #$single_target_category_id )" ); ?></p>
+								<?php
+
+							endforeach;
+
+							echo '</div>';
+						} else {
+
+							?>
+
+							<p><i><?php esc_html_e( 'No Category(s) added', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></i></p>
+
+							<?php
+						}
+
 
 						?>
 					</td>
