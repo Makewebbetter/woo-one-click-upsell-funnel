@@ -35,15 +35,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<h2><?php esc_html_e( 'Premium Plugin Features', 'woo-one-click-upsell-funnel' ); ?></h2>
 		<h3><?php esc_html_e( 'Supported Products', 'woo-one-click-upsell-funnel' ); ?></h3>
 		<div class="wps_upsell_overview_supported_product">
-			<div class="wps_upsell_overview_product_icon simple">
-				<img src="<?php echo esc_url( WPS_WOCUF_URL . 'admin/resources/simple-products.png' ); ?>">
-				<h4><?php esc_html_e( 'Simple Products', 'woo-one-click-upsell-funnel' ); ?></h4>
-			</div>
-
-			<div class="wps_upsell_overview_product_icon variable">
-				<img src="<?php echo esc_url( WPS_WOCUF_URL . 'admin/resources/variable-products.png' ); ?>">
-				<h4><?php esc_html_e( 'Variable Products', 'woo-one-click-upsell-funnel' ); ?></h4>
-			</div>
+			
 
 			<div class="wps_upsell_overview_product_icon subscription">
 				<img src="<?php echo esc_url( WPS_WOCUF_URL . 'admin/resources/subscription-products.png' ); ?>">
