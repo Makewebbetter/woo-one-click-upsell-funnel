@@ -524,7 +524,7 @@ $wps_wocuf_pro_funnel_schedule_options = array(
 						wps_upsell_lite_wc_help_tip( $description );
 						?>
 
-						<select class="wc-funnel-product-search" multiple="multiple" style="" name="wps_wocuf_target_pro_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a simple product&hellip;', 'woo-one-click-upsell-funnel' ); ?>">
+						<select class="wc-funnel-product-search" multiple="multiple" style="" name="wps_wocuf_target_pro_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a product&hellip;', 'woo-one-click-upsell-funnel' ); ?>">
 
 						<?php
 
