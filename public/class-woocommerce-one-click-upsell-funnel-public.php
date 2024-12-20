@@ -2670,17 +2670,17 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		}
 
 		if ( ! empty( $offer_id ) && ! empty( $order_key ) && ! empty( $wp_nonce ) ) {
-			$result .= '<a style="' . $atts['style'] . '" class=
-			"wps_wocuf_pro_no wps_wocuf_pro_custom_skip ' . $atts['class'] . '" 
-			href="?ocuf_ns=' . $wp_nonce . '
-			&ocuf_th=1&ocuf_ok=' . $order_key . '
-			&ocuf_ofd=' . $offer_id . '
-			&ocuf_fid=' . $funnel_id . '"
-			>' . $content . '</a>';
+			$result .= '<a style="' . esc_attr( $atts['style'] ) . '" class=
+			"wps_wocuf_pro_no wps_wocuf_pro_custom_skip ' . esc_attr( $atts['class'] ) . '" 
+			href="?ocuf_ns=' . esc_attr( $wp_nonce ) . '
+			&ocuf_th=1&ocuf_ok=' . esc_attr( $order_key ) . '
+			&ocuf_ofd=' . esc_attr( $offer_id ) . '
+			&ocuf_fid=' . esc_attr( $funnel_id ) . '"
+			>' . esc_attr( $content ) . '</a>';
 		} else {
-			$result .= '<a style="' . $atts['style'] . '" 
-			class="wps_wocuf_pro_custom_skip ' . $atts['class'] . '" 
-			href="">' . $content . '</a>';
+			$result .= '<a style="' . esc_attr( $atts['style'] ) . '" 
+			class="wps_wocuf_pro_custom_skip ' . esc_attr( $atts['class'] ) . '" 
+			href="">' . esc_attr( $content ) . '</a>';
 		}
 
 		return $result;
