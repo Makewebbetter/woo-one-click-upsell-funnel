@@ -201,7 +201,7 @@ $google_analytics_fields = array(
 							esc_html__( 'Please Go to', 'woo-one-click-upsell-funnel' ),
 							esc_html__( 'WordPress Admin Dashboard', 'woo-one-click-upsell-funnel' ),
 							esc_html__( '>', 'woo-one-click-upsell-funnel' ),
-							esc_html__( 'WooCommerce', 'woo-one-click-upsell-funnel' ),
+							esc_html__( 'woo-one-click-upsell-funnel', 'woo-one-click-upsell-funnel' ),
 							esc_html__( '>', 'woo-one-click-upsell-funnel' ),
 							esc_html__( 'Conversion Tracking', 'woo-one-click-upsell-funnel' ),
 							esc_html__( '>', 'woo-one-click-upsell-funnel' ),

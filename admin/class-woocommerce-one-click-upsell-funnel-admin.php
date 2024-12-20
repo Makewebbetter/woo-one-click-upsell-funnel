@@ -140,10 +140,6 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 
 			wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wocuf_branner_notice', $wps_wocuf_branner_notice );
 			wp_enqueue_script( $this->plugin_name . 'admin-notice' );
-			
-			wp_enqueue_script( 'wps_wocuf_store_checkout_script', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array( 'jquery' ), $this->version, false );
-
-
 
 			if ( 'woocommerce_page_wc-settings' === $pagescreen ) {
 				wp_enqueue_script( 'wps_wocuf_pro_banner_admin_script', plugin_dir_url( __FILE__ ) . 'js/woocommerce_one_click_upsell_funnel_pro-banner-admin.js', array( 'jquery' ), $this->version, false );
@@ -212,7 +208,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 				$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 				if ( ! $id_nonce_verified ) {
-					wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+					wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 				}
 
 				if ( ! empty( $_GET['wps-upsell-offer-section'] ) ) {
@@ -1111,7 +1107,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['post_type'] ) && 'shop_order' === sanitize_key( wp_unslash( $_GET['post_type'] ) ) ) {
@@ -1152,7 +1148,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['wps_wocuf_pro_upsell_filter'] ) && 'all_upsells' === $_GET['wps_wocuf_pro_upsell_filter'] ) {

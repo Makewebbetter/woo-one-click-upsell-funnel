@@ -60,7 +60,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['show_categories'] ) ) {
@@ -111,7 +111,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 
 			$legend[] = array(
 				/* translators: 1: total items sold 2: category name */
-				'title'            => sprintf( __( '%1$s sales in %2$s', 'woocommerce' ), '<strong>' . wc_price( $total ) . '</strong>', $category->name ),
+				'title'            => sprintf( __( '%1$s sales in %2$s', 'woo-one-click-upsell-funnel' ), '<strong>' . wc_price( $total ) . '</strong>', $category->name ),
 				'color'            => isset( $this->chart_colours[ $index ] ) ? $this->chart_colours[ $index ] : $this->chart_colours[0],
 				'highlight_series' => $index,
 			);
@@ -128,10 +128,10 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 	public function output_report() {
 
 		$ranges = array(
-			'year'       => __( 'Year', 'woocommerce' ),
-			'last_month' => __( 'Last month', 'woocommerce' ),
-			'month'      => __( 'This month', 'woocommerce' ),
-			'7day'       => __( 'Last 7 days', 'woocommerce' ),
+			'year'       => __( 'Year', 'woo-one-click-upsell-funnel' ),
+			'last_month' => __( 'Last month', 'woo-one-click-upsell-funnel' ),
+			'month'      => __( 'This month', 'woo-one-click-upsell-funnel' ),
+			'7day'       => __( 'Last 7 days', 'woo-one-click-upsell-funnel' ),
 		);
 
 		$this->chart_colours = array( '#8eba36', '#3498db', '#1abc9c', '#34495e', '#2ecc71', '#f1c40f', '#e67e22', '#e74c3c', '#2980b9', '#8e44ad', '#2c3e50', '#16a085', '#27ae60', '#f39c12', '#d35400', '#c0392b' );
@@ -140,7 +140,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : '7day';
@@ -229,7 +229,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 
 		return array(
 			array(
-				'title'    => __( 'Categories', 'woocommerce' ),
+				'title'    => __( 'Categories', 'woo-one-click-upsell-funnel' ),
 				'callback' => array( $this, 'category_widget' ),
 			),
 		);
@@ -244,14 +244,14 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$categories = get_terms( 'product_cat' );
 		?>
 	<form method="GET">
 	<div>
-		<select multiple="multiple" data-placeholder="<?php esc_attr_e( 'Select categories&hellip;', 'woocommerce' ); ?>" class="wc-enhanced-select" id="show_categories" name="show_categories[]" style="width: 205px;">
+		<select multiple="multiple" data-placeholder="<?php esc_attr_e( 'Select categories&hellip;', 'woo-one-click-upsell-funnel' ); ?>" class="wc-enhanced-select" id="show_categories" name="show_categories[]" style="width: 205px;">
 		<?php
 			$r                 = array();
 			$r['pad_counts']   = 1;
@@ -265,9 +265,9 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 			echo wp_kses( wc_walk_category_dropdown_tree( $categories, 0, $r ), wps_upsell_lite_allowed_html() ); // phpcs:ignore
 		?>
 		</select>
-		<a href="#" class="select_none"><?php esc_html_e( 'None', 'woocommerce' ); ?></a>
-		<a href="#" class="select_all"><?php esc_html_e( 'All', 'woocommerce' ); ?></a>
-		<button type="submit" class="submit button" value="<?php esc_attr_e( 'Show', 'woocommerce' ); ?>"><?php esc_html_e( 'Show', 'woocommerce' ); ?></button>
+		<a href="#" class="select_none"><?php esc_html_e( 'None', 'woo-one-click-upsell-funnel' ); ?></a>
+		<a href="#" class="select_all"><?php esc_html_e( 'All', 'woo-one-click-upsell-funnel' ); ?></a>
+		<button type="submit" class="submit button" value="<?php esc_attr_e( 'Show', 'woo-one-click-upsell-funnel' ); ?>"><?php esc_html_e( 'Show', 'woo-one-click-upsell-funnel' ); ?></button>
 		<input type="hidden" name="range" value="<?php echo ( ! empty( $_GET['range'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['range'] ) ) ) : ''; ?>" />
 		<input type="hidden" name="start_date" value="<?php echo ( ! empty( $_GET['start_date'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['start_date'] ) ) ) : ''; ?>" />
 		<input type="hidden" name="end_date" value="<?php echo ( ! empty( $_GET['end_date'] ) ) ? esc_attr( sanitize_text_field( wp_unslash( $_GET['end_date'] ) ) ) : ''; ?>" />
@@ -304,7 +304,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$current_range = ! empty( $_GET['range'] ) ? sanitize_text_field( wp_unslash( $_GET['range'] ) ) : '7day';
@@ -314,10 +314,10 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 			download="report-<?php echo esc_attr( $current_range ); ?>-<?php echo esc_attr( date_i18n( 'Y-m-d', time() ) ); ?>.csv"
 			class="export_csv"
 			data-export="chart"
-			data-xaxes="<?php esc_attr_e( 'Date', 'woocommerce' ); ?>"
+			data-xaxes="<?php esc_attr_e( 'Date', 'woo-one-click-upsell-funnel' ); ?>"
 			data-groupby="<?php echo esc_attr( $this->chart_groupby ); ?>"
 		>
-		<?php esc_html_e( 'Export CSV', 'woocommerce' ); ?>
+		<?php esc_html_e( 'Export CSV', 'woo-one-click-upsell-funnel' ); ?>
 	</a>
 		<?php
 	}
@@ -331,7 +331,7 @@ class WPS_Upsell_Report_Sales_By_Category extends WC_Admin_Report {
 		if ( empty( $this->show_categories ) ) {
 			?>
 		<div class="chart-container">
-			<p class="chart-prompt"><?php esc_html_e( 'Choose a category to view stats', 'woocommerce' ); ?></p>
+			<p class="chart-prompt"><?php esc_html_e( 'Choose a category to view stats', 'woo-one-click-upsell-funnel' ); ?></p>
 		</div>
 			<?php
 		} else {

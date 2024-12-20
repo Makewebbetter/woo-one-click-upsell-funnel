@@ -68,9 +68,7 @@ if ( 'overview' === get_transient( 'wps_upsell_default_settings_tab' ) ) {
 	<!-- To make WordPress notice appear at this place. As it searchs from top and appears at the 1st heading tag-->
 	<h1></h1>
 
-	<div class="hide"  id="wps_wocuf_pro_loader">	
-		<img id="wps-wocuf-loading-image" src="<?php echo 'images/spinner-2x.gif'; ?>" >
-	</div>
+
 	<div class="wps_wocuf_pro_header">
 		<div class="wps_wocuf_pro_setting_title"><?php esc_html_e( 'One Click Upsell Funnel for WooCommerce', 'woo-one-click-upsell-funnel' ); ?></div>
 

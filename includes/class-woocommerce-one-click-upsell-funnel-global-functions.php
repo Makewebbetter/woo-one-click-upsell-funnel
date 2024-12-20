@@ -252,7 +252,7 @@ function wps_upsell_lite_get_product_discount() {
 	$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 	if ( ! $id_nonce_verified ) {
-		wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+		wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 	}
 
 	$funnel_id = isset( $_GET['ocuf_fid'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_fid'] ) ) : 'not_set';
@@ -317,7 +317,7 @@ function wps_upsell_lite_get_pid_from_url_params() {
 	$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 	if ( ! $id_nonce_verified ) {
-		wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+		wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 	}
 
 	if ( isset( $_GET['ocuf_ofd'] ) && isset( $_GET['ocuf_fid'] ) ) {

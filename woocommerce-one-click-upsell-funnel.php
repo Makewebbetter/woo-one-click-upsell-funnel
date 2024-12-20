@@ -19,9 +19,9 @@
  *
  * Requires Plugins: woocommerce
  * Requires at least:     5.5.0
- * Tested up to:          6.6.2
+ * Tested up to:          6.7.1
  * WC requires at least:  6.5.0
- * WC tested up to:       9.3.3
+ * WC tested up to:       9.5.1
  *
  * Author:                WP Swings
  * Author URI:            https://wpswings.com/?utm_source=wpswings-official&utm_medium=upsell-org-backend&utm_campaign=official
@@ -217,9 +217,20 @@ if ( $activated ) {
 		function wps_upsell_lite_add_doc_and_premium_link( $links, $file ) {
 
 			if ( false !== strpos( $file, 'woocommerce-one-click-upsell-funnel.php' ) ) {
+				$default_attr = array(
+					'class' => 'wps-info-img',
+					'alt'   => __( 'Demo image', 'woocommerce' ),
+				);
+				$image_html = wp_get_attachment_image(
+					esc_url( WPS_WOCUF_URL ) . 'admin/resources/icons/Demo.svg',
+					'',
+					false,
+					$default_attr
+				);
 
 				$row_meta = array(
-					'demo'    => '<a href="https://demo.wpswings.com/one-click-upsell-funnel-for-woocommerce-pro/?utm_source=wpswings-upsell-demo&utm_medium=upsell-org-backend&utm_campaign=upsell-demo" target="_blank"><img class="wps-info-img" src="' . esc_url( WPS_WOCUF_URL ) . 'admin/resources/icons/Demo.svg" class="wps-info-img" alt="Demo image">' . esc_html__( 'Demo', 'woo-one-click-upsell-funnel' ) . '</a>',
+					'demo'    => '<a href="https://demo.wpswings.com/one-click-upsell-funnel-for-woocommerce-pro/?utm_source=wpswings-upsell-demo&utm_medium=upsell-org-backend&utm_campaign=upsell-demo" target="_blank"><img class="wps-info-img" src="' . esc_url( $image_html ) . 'admin/resources/icons/Demo.svg" class="wps-info-img" alt="Demo image">' . esc_html__( 'Demo', 'woo-one-click-upsell-funnel' ) . '</a>',
+					
 					'doc'     => '<a href="https://docs.wpswings.com/one-click-upsell-funnel-for-woocommerce/?utm_source=wpswings-upsell-doc&utm_medium=upsell-org-backend&utm_campaign=upsell-doc" target="_blank"><img class="wps-info-img" src="' . esc_url( WPS_WOCUF_URL ) . 'admin/resources/icons/Documentation.svg" class="wps-info-img" alt="Documentation image">' . esc_html__( 'Documentation', 'woo-one-click-upsell-funnel' ) . '</a>',
 					'video'     => '<a href="https://www.youtube.com/watch?v=PvyKF8WEkAk" target="_blank"><img class="wps-info-img" src="' . esc_url( WPS_WOCUF_URL ) . 'admin/resources/icons/video.png" class="wps-info-img" alt="Documentation image">' . esc_html__( 'Video', 'woo-one-click-upsell-funnel' ) . '</a>',
 					'support' => '<a href="https://wpswings.com/submit-query/?utm_source=wpswings-upsell-support&utm_medium=upsell-org-backend&utm_campaign=support" target="_blank"><img class="wps-info-img" src="' . esc_url( WPS_WOCUF_URL ) . 'admin/resources/icons/Support.svg" class="wps-info-img" alt="DeSupportmo image">' . esc_html__( 'Support', 'woo-one-click-upsell-funnel' ) . '</a>',
@@ -390,7 +401,7 @@ if ( $activated ) {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		// To hide Plugin activated notice.
@@ -401,7 +412,7 @@ if ( $activated ) {
 			<?php if ( ! $activated ) : ?>
 
 			<div class="notice notice-error is-dismissible">
-				<p><strong><?php esc_html_e( 'WooCommerce', 'woo-one-click-upsell-funnel' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'woo-one-click-upsell-funnel' ); ?><strong><?php esc_html_e( 'One Click Upsell Funnel for WooCommerce', 'woo-one-click-upsell-funnel' ); ?></strong><?php esc_html_e( '.', 'woo-one-click-upsell-funnel' ); ?></p>
+				<p><strong><?php esc_html_e( 'woo-one-click-upsell-funnel', 'woo-one-click-upsell-funnel' ); ?></strong><?php esc_html_e( ' is not activated, Please activate WooCommerce first to activate ', 'woo-one-click-upsell-funnel' ); ?><strong><?php esc_html_e( 'One Click Upsell Funnel for WooCommerce', 'woo-one-click-upsell-funnel' ); ?></strong><?php esc_html_e( '.', 'woo-one-click-upsell-funnel' ); ?></p>
 			</div>
 
 				<?php
