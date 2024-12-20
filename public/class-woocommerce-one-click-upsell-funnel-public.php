@@ -2182,11 +2182,11 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						$funnel_id = isset( $_GET['ocuf_fid'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_fid'] ) ) : '';
 
 						$buy_now_link = '?wps_wocuf_pro_buy
-						=true&ocuf_ns=' . $wp_nonce . '
-						&ocuf_ok=' . $order_key . '
-						&ocuf_ofd=' . $offer_id . '
-						&ocuf_fid=' . $funnel_id . '
-						&product_id=' . $product_id;
+						=true&ocuf_ns=' . esc_attr( $wp_nonce ) . '
+						&ocuf_ok=' . esc_attr( $order_key ) . '
+						&ocuf_ofd=' . esc_attr( $offer_id ) . '
+						&ocuf_fid=' . esc_attr( $funnel_id ) . '
+						&product_id=' . esc_attr( $product_id );
 					}
 				} elseif ( 'admin_view' === $validate_shortcode ) {
 
@@ -2234,10 +2234,10 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 					$offer_id  = isset( $_GET['ocuf_ofd'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ofd'] ) ) : '';
 					$funnel_id = isset( $_GET['ocuf_fid'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_fid'] ) ) : '';
 
-					$no_thanks_link = '?ocuf_ns=' . $wp_nonce . '
-					&ocuf_th=1&ocuf_ok=' . $order_key . '
-					&ocuf_ofd=' . $offer_id . '
-					&ocuf_fid=' . $funnel_id;
+					$no_thanks_link = '?ocuf_ns=' . esc_attr( $wp_nonce ) . '
+					&ocuf_th=1&ocuf_ok=' . esc_attr( $order_key ) . '
+					&ocuf_ofd=' . esc_attr( $offer_id ) . '
+					&ocuf_fid=' . esc_attr( $funnel_id );
 
 				} elseif ( 'admin_view' === $validate_shortcode ) {
 
@@ -2274,7 +2274,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 		$stars_percent = $stars * 20;
 
-		$review_html = '<div class="wps-upsell-star-rating"><span style="width: ' . $stars_percent . '%;"></div>';
+		$review_html = '<div class="wps-upsell-star-rating"><span style="width: ' . esc_attr( $stars_percent ) . '%;"></div>';
 
 		return $review_html;
 
@@ -2579,8 +2579,8 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 							<input type="hidden" name="product_id" class="wps_wocuf_pro_variation_id" value="' . absint( $product->get_id() ) . '">
 							<input type="hidden" name="ocuf_ofd" value="' . esc_attr( $offer_id ) . '">
 							<input type="hidden" name="ocuf_ok" value="' . esc_attr( $order_key ) . '">
-							<input type="hidden" name="wps_wocuf_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_field_post_nonce' ) . '">
-							<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) . '">
+							<input type="hidden" name="wps_wocuf_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_field_post_nonce' ) ) . '">
+							<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) ) . '">
 							<button style="' . esc_attr( $atts['style'] ) . '" class="wps_wocuf_pro_custom_buy ' . esc_attr( $atts['class'] ) . '" type="submit" onclick="" name="wps_wocuf_pro_buy">' . esc_attr( $content ) . '</button>
 						</form>';
 
@@ -2591,8 +2591,8 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						<input type="hidden" name="product_id" class="wps_wocuf_pro_variation_id" value="">
 						<input type="hidden" name="ocuf_ofd" value="' . esc_attr( $offer_id ) . '">
 						<input type="hidden" name="ocuf_ok" value="' . esc_attr( $order_key ) . '">
-						<input type="hidden" name="wps_wocuf_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_field_post_nonce' ) . '">
-						<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) . '">
+						<input type="hidden" name="wps_wocuf_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_field_post_nonce' ) ) . '">
+						<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) ) . '">
 						<button style="' . esc_attr( $atts['style'] ) . '" class="wps_wocuf_pro_custom_buy ' . esc_attr( $atts['class'] ) . '" type="submit" name="wps_wocuf_pro_buy">' . esc_attr( $content ) . '</button>
 					</form>';
 		}
