@@ -2570,7 +2570,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 		$stars_percent = $stars * 20;
 
-		$review_html = '<div class="wps-upsell-star-rating"><span style="width: ' . $stars_percent . '%;"></div>';
+		$review_html = '<div class="wps-upsell-star-rating"><span style="width: ' . esc_attr( $stars_percent ) . '%;"></div>';
 
 		return $review_html;
 
@@ -2690,7 +2690,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$order_key = isset( $_GET['ocuf_ok'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ok'] ) ) : '';
@@ -2701,10 +2701,10 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 		$order_received_url = add_query_arg( 'key', $order_key, $order_received_url );
 
-		$result = '<a href="' . $order_received_url . '" 
-		class="button' . $atts['class'] . '" 
-		style="' . $atts['style'] . '">
-		' . $content . '</a>';
+		$result = '<a href="' . esc_attr( $order_received_url ) . '" 
+		class="button' . esc_attr( $atts['class'] ) . '" 
+		style="' . esc_attr( $atts['style'] ) . '">
+		' . esc_attr( $content ) . '</a>';
 
 		return $result;
 	}
@@ -2731,7 +2731,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$offer_id = isset( $_GET['ocuf_ofd'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ofd'] ) ) : '';
@@ -2778,15 +2778,15 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 			$product = $wps_wocuf_pro_offered_product;
 
-			$result .= '<div style="' . $atts['style'] . '" 
-			class="wps_wocuf_pro_custom_offer_price ' . $atts['class'] . '">
-			' . $wps_wocuf_pro_before_offer_price_text . ' :
-				 ' . $product->get_price_html() . '</div>';
+			$result .= '<div style="' . esc_attr( $atts['style'] ) . '" 
+			class="wps_wocuf_pro_custom_offer_price ' . esc_attr( $atts['class'] ) . '">
+			' . esc_attr( $wps_wocuf_pro_before_offer_price_text ) . ' :
+				 ' . esc_attr( $product->get_price_html() ) . '</div>';
 
 		} else {
-			$result .= '<div style="' . $atts['style'] . '" 
-			class="wps_wocuf_pro_custom_offer_price ' . $atts['class'] . '">
-			' . $content . '</div>';
+			$result .= '<div style="' . esc_attr( $atts['style'] ) . '" 
+			class="wps_wocuf_pro_custom_offer_price ' . esc_attr( $atts['class'] ) . '">
+			' . esc_attr( $content ) . '</div>';
 		}
 
 		return $result;
@@ -2826,7 +2826,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$offer_id = isset( $_GET['ocuf_ofd'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ofd'] ) ) : '';
@@ -2870,26 +2870,26 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 			$product = $wps_wocuf_pro_offered_product;
 
 			$result .= '<form method="post" class="wps_wocuf_pro_custom_offer">
-							<input type="hidden" name="ocuf_ns" value="' . $wp_nonce . '">
-							<input type="hidden" name="ocuf_fid" value="' . $funnel_id . '">
+							<input type="hidden" name="ocuf_ns" value="' . esc_attr( $wp_nonce ) . '">
+							<input type="hidden" name="ocuf_fid" value="' . esc_attr( $funnel_id ) . '">
 							<input type="hidden" name="product_id" class="wps_wocuf_pro_variation_id" value="' . absint( $product->get_id() ) . '">
-							<input type="hidden" name="ocuf_ofd" value="' . $offer_id . '">
-							<input type="hidden" name="ocuf_ok" value="' . $order_key . '">
-							<input type="hidden" name="wps_wocuf_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_field_post_nonce' ) . '">
-							<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) . '">
-							<button style="' . $atts['style'] . '" class="wps_wocuf_pro_custom_buy ' . $atts['class'] . '" type="submit" onclick="" name="wps_wocuf_pro_buy">' . $content . '</button>
+							<input type="hidden" name="ocuf_ofd" value="' . esc_attr( $offer_id ) . '">
+							<input type="hidden" name="ocuf_ok" value="' . esc_attr( $order_key ) . '">
+							<input type="hidden" name="wps_wocuf_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_field_post_nonce' ) ) . '">
+							<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) ) . '">
+							<button style="' . esc_attr( $atts['style'] ) . '" class="wps_wocuf_pro_custom_buy ' . esc_attr( $atts['class'] ) . '" type="submit" onclick="" name="wps_wocuf_pro_buy">' . esc_attr( $content ) . '</button>
 						</form>';
 
 		} else {
 			$result .= '<form method="post" class="wps_wocuf_pro_custom_offer">
-						<input type="hidden" name="ocuf_ns" value="' . $wp_nonce . '">
-						<input type="hidden" name="ocuf_fid" value="' . $funnel_id . '">
+						<input type="hidden" name="ocuf_ns" value="' . esc_attr( $wp_nonce ) . '">
+						<input type="hidden" name="ocuf_fid" value="' . esc_attr( $funnel_id ) . '">
 						<input type="hidden" name="product_id" class="wps_wocuf_pro_variation_id" value="">
-						<input type="hidden" name="ocuf_ofd" value="' . $offer_id . '">
-						<input type="hidden" name="ocuf_ok" value="' . $order_key . '">
-						<input type="hidden" name="wps_wocuf_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_field_post_nonce' ) . '">
-						<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) . '">
-						<button style="' . $atts['style'] . '" class="wps_wocuf_pro_custom_buy ' . $atts['class'] . '" type="submit" name="wps_wocuf_pro_buy">' . $content . '</button>
+						<input type="hidden" name="ocuf_ofd" value="' . esc_attr( $offer_id ) . '">
+						<input type="hidden" name="ocuf_ok" value="' . esc_attr( $order_key ) . '">
+						<input type="hidden" name="wps_wocuf_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_field_post_nonce' ) ) . '">
+						<input type="hidden" name="wps_wocuf_after_post_nonce" value="' . esc_attr( wp_create_nonce( 'wps_wocuf_after_field_post_nonce' ) ) . '">
+						<button style="' . esc_attr( $atts['style'] ) . '" class="wps_wocuf_pro_custom_buy ' . esc_attr( $atts['class'] ) . '" type="submit" name="wps_wocuf_pro_buy">' . esc_attr( $content ) . '</button>
 					</form>';
 		}
 
@@ -2943,7 +2943,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$offer_id = isset( $_GET['ocuf_ofd'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ofd'] ) ) : '';
@@ -2965,17 +2965,17 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		}
 
 		if ( ! empty( $offer_id ) && ! empty( $order_key ) && ! empty( $wp_nonce ) ) {
-			$result .= '<a style="' . $atts['style'] . '" class=
-			"wps_wocuf_pro_no wps_wocuf_pro_custom_skip ' . $atts['class'] . '" 
-			href="?ocuf_ns=' . $wp_nonce . '
-			&ocuf_th=1&ocuf_ok=' . $order_key . '
-			&ocuf_ofd=' . $offer_id . '
-			&ocuf_fid=' . $funnel_id . '"
-			>' . $content . '</a>';
+			$result .= '<a style="' . esc_attr( $atts['style'] ) . '" class=
+			"wps_wocuf_pro_no wps_wocuf_pro_custom_skip ' . esc_attr( $atts['class'] ) . '" 
+			href="?ocuf_ns=' . esc_attr( $wp_nonce ) . '
+			&ocuf_th=1&ocuf_ok=' . esc_attr( $order_key ) . '
+			&ocuf_ofd=' . esc_attr( $offer_id ) . '
+			&ocuf_fid=' . esc_attr( $funnel_id ) . '"
+			>' . esc_attr( $content ) . '</a>';
 		} else {
-			$result .= '<a style="' . $atts['style'] . '" 
-			class="wps_wocuf_pro_custom_skip ' . $atts['class'] . '" 
-			href="">' . $content . '</a>';
+			$result .= '<a style="' . esc_attr( $atts['style'] ) . '" 
+			class="wps_wocuf_pro_custom_skip ' . esc_attr( $atts['class'] ) . '" 
+			href="">' . esc_attr( $content ) . '</a>';
 		}
 
 		return $result;

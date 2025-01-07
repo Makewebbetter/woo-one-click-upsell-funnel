@@ -140,10 +140,6 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 
 			wp_localize_script( $this->plugin_name . 'admin-notice', 'wps_wocuf_branner_notice', $wps_wocuf_branner_notice );
 			wp_enqueue_script( $this->plugin_name . 'admin-notice' );
-			
-			wp_enqueue_script( 'wps_wocuf_store_checkout_script', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js', array( 'jquery' ), $this->version, false );
-
-
 
 			if ( 'woocommerce_page_wc-settings' === $pagescreen ) {
 				wp_enqueue_script( 'wps_wocuf_pro_banner_admin_script', plugin_dir_url( __FILE__ ) . 'js/woocommerce_one_click_upsell_funnel_pro-banner-admin.js', array( 'jquery' ), $this->version, false );
@@ -212,7 +208,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 				$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 				if ( ! $id_nonce_verified ) {
-					wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+					wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 				}
 
 				if ( ! empty( $_GET['wps-upsell-offer-section'] ) ) {
@@ -959,7 +955,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$search_results = new WP_Query(
 			array(
 				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => array( 'product', 'product_variation' ),
+				'post_type'           => array( 'product' ),
 				'post_status'         => array( 'publish' ),
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => -1,
@@ -1010,6 +1006,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 
 		wp_die();
 	}
+
 
 	/**
 	 * Select2 search for adding funnel target product categories
@@ -1062,7 +1059,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$search_results = new WP_Query(
 			array(
 				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => array( 'product', 'product_variation' ),
+				'post_type'           => array( 'product' ),
 				'post_status'         => array( 'publish' ),
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => -1,
@@ -1091,6 +1088,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 				$product      = wc_get_product( $search_results->post->ID );
 				$downloadable = $product->is_downloadable();
 				$stock        = $product->get_stock_status();
+
 				$product_type = $product->get_type();
 
 				$unsupported_product_types = array(
@@ -1164,7 +1162,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['post_type'] ) && 'shop_order' === sanitize_key( wp_unslash( $_GET['post_type'] ) ) ) {
@@ -1205,7 +1203,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['wps_wocuf_pro_upsell_filter'] ) && 'all_upsells' === $_GET['wps_wocuf_pro_upsell_filter'] ) {
@@ -1670,6 +1668,3 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 	}
 
 }
-
-
-
