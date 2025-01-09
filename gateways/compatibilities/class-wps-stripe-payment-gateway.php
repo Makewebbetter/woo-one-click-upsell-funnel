@@ -80,7 +80,7 @@ class WPS_Stripe_Payment_Gateway  {
 			if ( is_wp_error( $response ) ) {
 
 				// @todo handle the error part here/failure of order.
-				$error_message = sprintf( __( 'Something Went Wrong. Please see log file for more info.', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+				$error_message = sprintf( __( 'Something Went Wrong. Please see log file for more info.',  'woo-one-click-upsell-funnel' ) );
 
 			} else {
 
@@ -88,7 +88,7 @@ class WPS_Stripe_Payment_Gateway  {
 
 					$is_successful = false;
 					/* translators: %s: decimal */
-					$order_note = sprintf( esc_html__( 'Stripe Transaction Failed (%s)', 'one-click-upsell-funnel-for-woocommerce-pro' ), $response->error->message );
+					$order_note = sprintf( esc_html__( 'Stripe Transaction Failed (%s)',  'woo-one-click-upsell-funnel' ), $response->error->message );
 					$order->update_status( 'upsell-failed', $order_note );
 
 				} else {
@@ -96,7 +96,7 @@ class WPS_Stripe_Payment_Gateway  {
 					// @todo handle the success part here/failure of order.
 					wps_wocfo_hpos_update_meta_data( $order_id, '_upsell_payment_transaction_id', $response->id );
 					/* translators: %s: decimal */
-					$order_note = sprintf( __( 'Stripe Upsell Transaction Successful (%s)', 'one-click-upsell-funnel-for-woocommerce-pro' ), $response->id );
+					$order_note = sprintf( __( 'Stripe Upsell Transaction Successful (%s)',  'woo-one-click-upsell-funnel' ), $response->id );
 					
 					if ( ! empty ( $response->balance_transaction->fee || ! empty( $response->balance_transaction->amount ) ) ) {
 						wps_wocfo_hpos_update_meta_data( $order_id,'upsell_stripe_fee', $response->balance_transaction->fee );
@@ -123,7 +123,7 @@ class WPS_Stripe_Payment_Gateway  {
 
 			// @todo transaction failure to handle here.
 			/* translators: %s: decimal */
-			$order_note = sprintf( esc_html__( 'Stripe Transaction Failed (%s)', 'one-click-upsell-funnel-for-woocommerce-pro' ), $e->getMessage() );
+			$order_note = sprintf( esc_html__( 'Stripe Transaction Failed (%s)',  'woo-one-click-upsell-funnel' ), $e->getMessage() );
 			$order->update_status( 'upsell-failed', $order_note );
 			return false;
 		}
@@ -338,7 +338,7 @@ class WPS_Stripe_Payment_Gateway  {
 		$post_data['currency']    = strtolower( $this->wps_sfw_get_order_currency( $order ) );
 		$post_data['amount']      = WC_Stripe_Helper::get_stripe_amount( $charge_amount, $post_data['currency'] );
 		/* translators: 1$: site name,2$: order number */
-		$post_data['description'] = sprintf( __( '%1$s - Order %2$s - Upsell Order.', 'one-click-upsell-funnel-for-woocommerce-pro' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
+		$post_data['description'] = sprintf( __( '%1$s - Order %2$s - Upsell Order.',  'woo-one-click-upsell-funnel' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
 		$post_data['capture']     = 'true';
 		$billing_first_name       = $order->get_billing_first_name();
 		$billing_last_name        = $order->get_billing_last_name();
@@ -383,7 +383,7 @@ class WPS_Stripe_Payment_Gateway  {
 		$post_data['currency'] = strtolower( $this->get_order_currency( $order ) );
 		$post_data['amount']   = WC_Stripe_Helper::get_stripe_amount( $charge_amount, $post_data['currency'] );
 		/* translators: %s: decimal */
-		$post_data['description'] = sprintf( __( '%1$s - Order %2$s - upsell payment.', 'one-click-upsell-funnel-for-woocommerce-pro' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
+		$post_data['description'] = sprintf( __( '%1$s - Order %2$s - upsell payment.',  'woo-one-click-upsell-funnel' ), wp_specialchars_decode( get_bloginfo( 'name' ), ENT_QUOTES ), $order->get_order_number() );
 		$post_data['capture']     = $gateway->capture ? 'true' : 'false';
 		$billing_first_name       = $order->get_billing_first_name();
 		$billing_last_name        = $order->get_billing_last_name();
@@ -393,8 +393,8 @@ class WPS_Stripe_Payment_Gateway  {
 			$post_data['receipt_email'] = $billing_email;
 		}
 		$metadata              = array(
-			__( 'customer_name', 'one-click-upsell-funnel-for-woocommerce-pro' ) => sanitize_text_field( $billing_first_name ) . ' ' . sanitize_text_field( $billing_last_name ),
-			__( 'customer_email', 'one-click-upsell-funnel-for-woocommerce-pro' ) => sanitize_email( $billing_email ),
+			__( 'customer_name',  'woo-one-click-upsell-funnel' ) => sanitize_text_field( $billing_first_name ) . ' ' . sanitize_text_field( $billing_last_name ),
+			__( 'customer_email',  'woo-one-click-upsell-funnel' ) => sanitize_email( $billing_email ),
 			'order_id' => $order_id,
 		);
 		$post_data['expand[]'] = 'balance_transaction';
@@ -541,7 +541,7 @@ class WPS_Stripe_Payment_Gateway  {
 				'stripe_error',
 				sprintf(
 					/* translators: %1$s is a stripe error message */
-					__( 'There was a problem initiating a refund: %1$s', 'woocommerce-gateway-stripe' ),
+					__( 'There was a problem initiating a refund: %1$s',  'woo-one-click-upsell-funnel' ),
 					$e->getMessage()
 				)
 			);
@@ -554,7 +554,7 @@ class WPS_Stripe_Payment_Gateway  {
 				'stripe_error',
 				sprintf(
 					/* translators: %1$s is a stripe error message */
-					__( 'There was a problem initiating a refund: %1$s', 'woocommerce-gateway-stripe' ),
+					__( 'There was a problem initiating a refund: %1$s',  'woo-one-click-upsell-funnel' ),
 					$response->error->message
 				)
 			);
@@ -568,12 +568,12 @@ class WPS_Stripe_Payment_Gateway  {
 			// If charge wasn't captured, skip creating a refund and cancel order.
 			if ( 'yes' !== $captured ) {
 				/* translators: amount (including currency symbol) */
-				$order->add_order_note( sprintf( __( 'Pre-Authorization for %s voided.', 'woocommerce-gateway-stripe' ), $formatted_amount ) );
+				$order->add_order_note( sprintf( __( 'Pre-Authorization for %s voided.',  'woo-one-click-upsell-funnel' ), $formatted_amount ) );
 				$order->update_status( 'cancelled' );
 				// If amount is set, that means this function was called from the manual refund form.
 				if ( ! is_null( $amount ) ) {
 					// Throw an exception to provide a custom message on why the refund failed.
-					throw new Exception( __( 'The authorization was voided and the order cancelled. Click okay to continue, then refresh the page.', 'woocommerce-gateway-stripe' ) );
+					throw new Exception( __( 'The authorization was voided and the order cancelled. Click okay to continue, then refresh the page.',  'woo-one-click-upsell-funnel' ) );
 				} else {
 					// If refund was initiaded by changing order status, prevent refund without errors.
 					return false;
@@ -587,7 +587,7 @@ class WPS_Stripe_Payment_Gateway  {
 			}
 
 			/* translators: 1) amount (including currency symbol) 2) transaction id 3) refund message */
-			$refund_message = sprintf( __( 'Refunded %1$s - Refund ID: %2$s - Reason: %3$s', 'woocommerce-gateway-stripe' ), $formatted_amount, $response->id, $reason );
+			$refund_message = sprintf( __( 'Refunded %1$s - Refund ID: %2$s - Reason: %3$s',  'woo-one-click-upsell-funnel' ), $formatted_amount, $response->id, $reason );
 
 			$order->add_order_note( $refund_message );
 			WC_Stripe_Logger::log( 'Success: ' . html_entity_decode( wp_strip_all_tags( $refund_message ) ) );

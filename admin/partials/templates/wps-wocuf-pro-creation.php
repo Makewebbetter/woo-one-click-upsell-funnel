@@ -556,20 +556,20 @@ $wps_wocuf_pro_funnel_schedule_options = array(
 				<tr valign="top">
 
 					<th scope="row" class="titledesc">
-						<label for="wps_wocuf_pro_target_pro_ids"><?php esc_html_e( 'Select target category(s)', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></label>
+						<label for="wps_wocuf_pro_target_pro_ids"><?php esc_html_e( 'Select target category(s)',  'woo-one-click-upsell-funnel' ); ?></label>
 					</th>
 
 					<td class="forminp forminp-text">
 
 						<?php
 
-						$description = esc_html__( 'If any one of these Target Category Products is checked out then the this funnel will be triggered and the below offers will be shown.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+						$description = esc_html__( 'If any one of these Target Category Products is checked out then the this funnel will be triggered and the below offers will be shown.',  'woo-one-click-upsell-funnel' );
 
 						wps_upsell_lite_wc_help_tip( $description );
 
 						?>
 
-						<select class="wc-funnel-product-category-search" multiple="multiple" style="" name="target_categories_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?>">
+						<select class="wc-funnel-product-category-search" multiple="multiple" style="" name="target_categories_ids[]" data-placeholder="<?php esc_attr_e( 'Search for a category&hellip;',  'woo-one-click-upsell-funnel' ); ?>">
 
 						<?php
 

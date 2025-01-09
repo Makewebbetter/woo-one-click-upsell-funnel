@@ -117,7 +117,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		if ( ! empty( $is_upsell_page ) ) {
 			$upsell_global_options = get_option( 'wps_upsell_lite_global_options', array() );
 			$upsell_skip_function = ! empty( $upsell_global_options['wps_wocuf_pro_skip_exit_intent_toggle'] ) ? sanitize_text_field( $upsell_global_options['wps_wocuf_pro_skip_exit_intent_toggle'] ) : '';
-			$upsell_exit_intent_message = __( 'Enhance your shopping experience! Explore additional products at a discount before you exit.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+			$upsell_exit_intent_message = __( 'Enhance your shopping experience! Explore additional products at a discount before you exit.',  'woo-one-click-upsell-funnel' );
 
 			wp_enqueue_script( 'woocommerce-one-click-upsell-public-exit-intent-script', plugin_dir_url( __FILE__ ) . 'js/woocommerce-one-click-upsell-funnel-public-exit-intent_lite.js', array( 'jquery' ), $this->version, true );
 
@@ -660,7 +660,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						if ( empty( $available_gateways[ $payment_method ] ) ) {
 
 							wc_clear_notices();
-							throw new Exception( __( 'Error processing checkout. Please try again with another payment method.', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+							throw new Exception( esc_html__( 'Error processing checkout. Please try again with another payment method.',  'woo-one-click-upsell-funnel' ) );
 						} else {
 
 							// Process Subscriptions for pre upsell products from Order.
@@ -678,7 +678,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 								$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 								if ( ! $id_nonce_verified ) {
-									wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+									wp_die( esc_html__( 'Nonce Not verified',  'woo-one-click-upsell-funnel' ) );
 								}
 
 								$compat_class = new Subscriptions_For_Woocommerce_Compatiblity( 'Subscriptions_For_Woocommerce_Compatiblity', '1.0.0' );
@@ -716,7 +716,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 									}
 
 									wc_clear_notices();
-									throw new Exception( __( 'Sorry, we are unable to process your payment at this time. Please retry later.', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+									throw new Exception( esc_html__( 'Sorry, we are unable to process your payment at this time. Please retry later.',  'woo-one-click-upsell-funnel' ) );
 
 								} elseif ( 'success' === $payment_result['result'] && ! empty( $payment_result['payment_intent_secret'] ) ) {
 
@@ -826,7 +826,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['ocuf_th'] ) && 1 === (int) $_GET['ocuf_th'] && isset( $_GET['ocuf_ofd'] ) && isset( $_GET['ocuf_fid'] ) && isset( $_GET['ocuf_ok'] ) && isset( $_GET['ocuf_ns'] ) ) {
@@ -1773,7 +1773,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 		}
 
-		$message = __( 'Your Upsell Offer Payment is failed. Please Contact site Owner for details.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+		$message = __( 'Your Upsell Offer Payment is failed. Please Contact site Owner for details.',  'woo-one-click-upsell-funnel' );
 
 		if ( function_exists( 'wc_add_notice' ) ) {
 
@@ -1805,7 +1805,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 	private function failed_upsell_payment() {
 		$shop_page_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id( 'shop' ) ) : get_permalink( woocommerce_get_page_id( 'shop' ) );
 		?>
-		<div style="text-align: center;margin-top: 30px;" id="wps_upsell_offer_expired"><h2 style="font-weight: 200;"><?php esc_html_e( 'Sorry, Your Offer Payment is failed.', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></h2><a class="button wc-backward" href="<?php echo esc_url( $shop_page_url ); ?>"><?php esc_html_e( 'Return to Shop ', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?>&rarr;</a></div>
+		<div style="text-align: center;margin-top: 30px;" id="wps_upsell_offer_expired"><h2 style="font-weight: 200;"><?php esc_html_e( 'Sorry, Your Offer Payment is failed.',  'woo-one-click-upsell-funnel' ); ?></h2><a class="button wc-backward" href="<?php echo esc_url( $shop_page_url ); ?>"><?php esc_html_e( 'Return to Shop ',  'woo-one-click-upsell-funnel' ); ?>&rarr;</a></div>
 		<?php
 		wp_die();
 	}
@@ -2010,7 +2010,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		if ( isset( $_GET['ocuf_ns'] ) && isset( $_GET['ocuf_ok'] ) && isset( $_GET['ocuf_ofd'] ) && isset( $_GET['ocuf_fid'] ) ) {
@@ -2469,7 +2469,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 						if ( ! $id_nonce_verified ) {
-							wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+							wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 						}
 
 						$wp_nonce  = isset( $_GET['ocuf_ns'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ns'] ) ) : '';
@@ -2523,7 +2523,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 					$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 					if ( ! $id_nonce_verified ) {
-						wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+						wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 					}
 					$wp_nonce  = isset( $_GET['ocuf_ns'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ns'] ) ) : '';
 					$order_key = isset( $_GET['ocuf_ok'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ok'] ) ) : '';
@@ -3439,7 +3439,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 		$order_key = isset( $_GET['ocuf_ok'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ok'] ) ) : '';
 
@@ -3842,7 +3842,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$order_key = isset( $_GET['ocuf_ok'] ) ? sanitize_text_field( wp_unslash( $_GET['ocuf_ok'] ) ) : '';
@@ -4213,7 +4213,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 						$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 						if ( ! $id_nonce_verified ) {
-							wp_die( esc_html__( 'Nonce Not verified', ' woo-one-click-upsell-funnel' ) );
+							wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 						}
 						?>
 						var offer_id = <?php echo ! empty( $_GET['ocuf_ofd'] ) ? esc_html( sanitize_text_field( wp_unslash( $_GET['ocuf_ofd'] ) ) ) : 'null'; ?>;

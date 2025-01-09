@@ -140,7 +140,7 @@ function wps_upsell_org_subscription_error() {
 	$shop_page_url = function_exists( 'wc_get_page_id' ) ? get_permalink( wc_get_page_id( 'shop' ) ) : get_permalink( woocommerce_get_page_id( 'shop' ) );
 
 	?>
-	<div style="text-align: center;margin-top: 30px;" id="wps_upsell_offer_expired"><h2 style="font-weight: 200;"><?php esc_html_e( 'Sorry, Could not create Subscription', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></h2><a class="button wc-backward" href="<?php echo esc_url( $shop_page_url ); ?>"><?php esc_html_e( 'Return to Shop ', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?>&rarr;</a></div>
+	<div style="text-align: center;margin-top: 30px;" id="wps_upsell_offer_expired"><h2 style="font-weight: 200;"><?php esc_html_e( 'Sorry, Could not create Subscription',  'woo-one-click-upsell-funnel' ); ?></h2><a class="button wc-backward" href="<?php echo esc_url( $shop_page_url ); ?>"><?php esc_html_e( 'Return to Shop ',  'woo-one-click-upsell-funnel' ); ?>&rarr;</a></div>
 	<?php
 	wp_die();
 }
@@ -283,9 +283,11 @@ function wps_upsell_org_create_subscriptions_for_order( $order_id, $order = '' )
 
 					$subscription->apply_coupon( $coupon->get_code() );
 				} catch ( Exception $e ) {
+					if (defined('WP_DEBUG') && WP_DEBUG) {
 
-					// Do nothing. The coupon will not be applied to the subscription.
-					error_log( 'Coupon could not be applied to subscription: ' . $e->getMessage() );
+						// Do nothing. The coupon will not be applied to the subscription.
+						error_log( 'Coupon could not be applied to subscription: ' . $e->getMessage() );
+					}
 				}
 			}
 			$subscription = wcs_get_subscription( $subscription->get_id() );
@@ -434,8 +436,10 @@ function wps_upsell_org_create_subscription_for_upsell_product( $order_id, $prod
 
 			$subscription->apply_coupon( $coupon->get_code() );
 		} catch ( Exception $e ) {
-			// Do nothing. The coupon will not be applied to the subscription.
-			error_log( 'Coupon could not be applied to subscription: ' . $e->getMessage() );
+			if (defined('WP_DEBUG') && WP_DEBUG) {
+				// Do nothing. The coupon will not be applied to the subscription.
+				error_log( 'Coupon could not be applied to subscription: ' . $e->getMessage() );
+			}
 		}
 	}
 	// Add fees.

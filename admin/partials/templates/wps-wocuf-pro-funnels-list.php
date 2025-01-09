@@ -158,7 +158,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 
 						if ( ! empty( $value['wps_wocuf_target_pro_ids'] ) ) {
 
-							echo '<p><i>' . esc_html__( 'Target Product(s) -', 'one-click-upsell-funnel-for-woocommerce-pro' ) . '</i></p>';
+							echo '<p><i>' . esc_html__( 'Target Product(s) -',  'woo-one-click-upsell-funnel' ) . '</i></p>';
 
 							echo '<div class="wps_upsell_funnel_list_targets">';
 
@@ -181,7 +181,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 
 							?>
 
-							<p><i><?php esc_html_e( 'No Product(s) added', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></i></p>
+							<p><i><?php esc_html_e( 'No Product(s) added',  'woo-one-click-upsell-funnel' ); ?></i></p>
 
 							<?php
 						}
@@ -192,7 +192,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 
 						if ( ! empty( $value['target_categories_ids'] ) ) {
 
-							echo '<p><i>' . esc_html__( 'Target Categories -', 'one-click-upsell-funnel-for-woocommerce-pro' ) . '</i></p>';
+							echo '<p><i>' . esc_html__( 'Target Categories -',  'woo-one-click-upsell-funnel' ) . '</i></p>';
 
 							echo '<div class="wps_upsell_funnel_list_targets">';
 
@@ -215,7 +215,7 @@ if ( ! empty( $wps_wocuf_pro_funnels_list ) ) {
 
 							?>
 
-							<p><i><?php esc_html_e( 'No Category(s) added', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></i></p>
+							<p><i><?php esc_html_e( 'No Category(s) added',  'woo-one-click-upsell-funnel' ); ?></i></p>
 
 							<?php
 						}

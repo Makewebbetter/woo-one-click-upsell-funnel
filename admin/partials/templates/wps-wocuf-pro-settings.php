@@ -523,11 +523,11 @@ wps_upsee_lite_go_pro( 'pro' );
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 					<span class="wps_wupsell_premium_strip">Pro</span>
-						<label for="wps_wocuf_pro_smart_skip_toggle"><?php esc_html_e( 'Enable Stripe Notice For Checkout Page', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></label>
+						<label for="wps_wocuf_pro_smart_skip_toggle"><?php esc_html_e( 'Enable Stripe Notice For Checkout Page',  'woo-one-click-upsell-funnel' ); ?></label>
 					</th>
 					<td class="forminp forminp-text">
 						<?php
-							$attribut_description = esc_html__( 'By enabling this setting you can show notice on the Checkout Page.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+							$attribut_description = esc_html__( 'By enabling this setting you can show notice on the Checkout Page.',  'woo-one-click-upsell-funnel' );
 							wps_upsell_lite_wc_help_tip( $attribut_description );
 						?>
 						<label class="wps_wocuf_pro_enable_plugin_label">
@@ -540,16 +540,16 @@ wps_upsee_lite_go_pro( 'pro' );
 				<tr valign="top">
 					<th scope="row" class="titledesc">
 						<span class="wps_wupsell_premium_strip">Pro</span>
-						<label><?php esc_html_e( 'Enter Stripe Checkout Notice', 'one-click-upsell-funnel-for-woocommerce-pro' ); ?></label>
+						<label><?php esc_html_e( 'Enter Stripe Checkout Notice',  'woo-one-click-upsell-funnel' ); ?></label>
 					</th>
 					<td>
 						<div class="wps_upsell_attribute_description">
 							<?php
-							$attribut_description = __( 'A notice will be shown on the Checkout page when Stripe is selected as the payment method.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+							$attribut_description = __( 'A notice will be shown on the Checkout page when Stripe is selected as the payment method.',  'woo-one-click-upsell-funnel' );
 							wps_upsell_lite_wc_help_tip( $attribut_description );
 							?>
 							<?php
-							$wps_stripe_checkout_notice = ! empty( $wps_upsell_global_settings['wps_stripe_checkout_notice'] ) ? $wps_upsell_global_settings['wps_stripe_checkout_notice'] : esc_html__( 'Please click on Stripe Save payment information button to get Upsell Offer.', 'one-click-upsell-funnel-for-woocommerce-pro' );
+							$wps_stripe_checkout_notice = ! empty( $wps_upsell_global_settings['wps_stripe_checkout_notice'] ) ? $wps_upsell_global_settings['wps_stripe_checkout_notice'] : esc_html__( 'Please click on Stripe Save payment information button to get Upsell Offer.',  'woo-one-click-upsell-funnel' );
 							?>
 							<textarea name="wps_stripe_checkout_notice" rows="4" cols="50"><?php echo esc_html( ( $wps_stripe_checkout_notice ) ); ?></textarea>
 						</div>
