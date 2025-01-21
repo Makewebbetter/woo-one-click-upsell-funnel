@@ -948,14 +948,19 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 	 * @since    1.0.0
 	 */
 	public function seach_products_for_funnel() {
-
-		check_ajax_referer( 'wps_wocuf_nonce', 'nonce' );
 		$return = array();
+
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+		}
 
 		$search_results = new WP_Query(
 			array(
 				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => array( 'product' ),
+				'post_type'           => array( 'product', 'product_variation' ),
 				'post_status'         => array( 'publish' ),
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => -1,
@@ -1052,14 +1057,19 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 	 * @since    1.0.0
 	 */
 	public function seach_products_for_offers() {
-
-		check_ajax_referer( 'wps_wocuf_nonce', 'nonce' );
 		$return = array();
+
+		$secure_nonce      = wp_create_nonce( 'wps-upsell-auth-nonce' );
+		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
+
+		if ( ! $id_nonce_verified ) {
+			wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+		}
 
 		$search_results = new WP_Query(
 			array(
 				's'                   => ! empty( $_GET['q'] ) ? sanitize_text_field( wp_unslash( $_GET['q'] ) ) : '',
-				'post_type'           => array( 'product' ),
+				'post_type'           => array( 'product', 'product_variation' ),
 				'post_status'         => array( 'publish' ),
 				'ignore_sticky_posts' => 1,
 				'posts_per_page'      => -1,
@@ -1088,7 +1098,6 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 				$product      = wc_get_product( $search_results->post->ID );
 				$downloadable = $product->is_downloadable();
 				$stock        = $product->get_stock_status();
-
 				$product_type = $product->get_type();
 
 				$unsupported_product_types = array(
