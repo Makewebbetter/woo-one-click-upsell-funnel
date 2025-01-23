@@ -954,7 +954,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$search_results = new WP_Query(
@@ -1063,7 +1063,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Admin {
 		$id_nonce_verified = wp_verify_nonce( $secure_nonce, 'wps-upsell-auth-nonce' );
 
 		if ( ! $id_nonce_verified ) {
-			wp_die( esc_html__( 'Nonce Not verified', 'one-click-upsell-funnel-for-woocommerce-pro' ) );
+			wp_die( esc_html__( 'Nonce Not verified', 'woo-one-click-upsell-funnel' ) );
 		}
 
 		$search_results = new WP_Query(

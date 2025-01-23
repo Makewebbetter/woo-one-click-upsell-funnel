@@ -150,12 +150,7 @@ class Woocommerce_One_Click_Upsell_Funnel {
 			$this->onboard = new WPSwings_Onboarding_Helper();
 		}
 
-		/**
-		 * The file responsible for handling Official stripe compatibility with seperate
-		 * payments order.
-		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'gateways/compatibilities/class-wps-stripe-payment-gateway.php';
-
+		
 		/**
 		 * The file responsible for defining Woocommerce Subscriptions compatibility
 		 * and handling functions.

@@ -617,46 +617,20 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 					$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 
-					if ( 'stripe' === $payment_method ) {
+					if ( 'stripe_cc' === $payment_method  || 'stripe' === $payment_method ) {
 
-						if ( ! is_user_logged_in() ) {
+						$checkout_nonce = ! empty( $_POST['checkout_order_processed_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['checkout_order_processed_nonce'] ) ) : '';
 
-							return;
-						}
-
-						// Stripe Payment Intent Issues.
-						$request_body = file_get_contents( 'php://input' );
-						if ( ! empty( $request_body ) ) {
-
-							$data                            = json_decode( $request_body );
-							$woocommerce_stripe_settings     = get_option( 'woocommerce_stripe_settings' );
-							$upe_checkout_experience_enabled = isset( $woocommerce_stripe_settings['upe_checkout_experience_enabled'] ) ? $woocommerce_stripe_settings['upe_checkout_experience_enabled'] : '';
-							if ( ! empty( $data ) && isset( $data->payment_data ) && ! empty( $data->payment_data ) ) {
-
-								$payment_object      = $data->payment_data;
-								$save_payment_method = 'no';
-								foreach ( $payment_object as $data ) {
-									if ( ( 'save_payment_method' === $data->key && 'yes' == $data->value ) || ( 'wc-stripe-new-payment-method' == $data->key && 1 == $data->value ) || ( 'isSavedToken' == $data->key && 1 == $data->value ) ) {
-
-										$save_payment_method = 'yes';
-										break;
-									}
-								}
-
-								if ( 'no' == $save_payment_method && 'disabled' != $upe_checkout_experience_enabled ) {
-
-									return;
-								}
+						if ( isset( $_POST['checkout_order_processed_nonce'] ) && wp_verify_nonce( $checkout_nonce, 'checkout_order_processed_nonce' ) ) {
+							if ( empty( $_GET['wc-ajax'] ) || 'checkout' !== $_GET['wc-ajax'] ) {
+								return;
 							}
 						}
+						wps_wocfo_hpos_update_meta_data( $order_id, '_post_data', $_POST );
 
-						/**
-						 * Use process function of official stripe and if succesfull, then show and add.
-						 * upsell products afterwards normally.
-						 * When done with adding process the payment for dummy order with same products
-						 * and process payment via same source.
-						 * On failed payment remove orders.
-						 */
+
+						
+						
 						if ( empty( $available_gateways[ $payment_method ] ) ) {
 
 							wc_clear_notices();
@@ -693,51 +667,12 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 								return;
 
 							} else {
-								// Official Stripe is available to work.
-								$stripe_class = $available_gateways[ $payment_method ];
-								$payment_result = $stripe_class->process_payment( $order_id, false, true );
 
-								$order          = wc_get_order( $order_id );
-								if ( 'failed' === $order->get_status() ) {
 
-									/**
-									 * Initial order is failed.
-									 * Delete the subscriptions if made.
-									 */
-									if ( wps_upsell_org_order_contains_subscription( $order_id ) && wps_upsell_org_pg_supports_subs( $order_id ) ) {
 
-										WC_Subscriptions_Manager::maybe_delete_subscription( $order_id );
-									}
-
-									if ( class_exists( 'Subscriptions_For_Woocommerce_Compatiblity' ) && true === Subscriptions_For_Woocommerce_Compatiblity::order_contains_subscription( $order_id ) ) {
-
-										/*delete failed order subscription*/
-										wps_sfw_delete_failed_subscription( $order_id );
-									}
-
-									wc_clear_notices();
-									throw new Exception( esc_html__( 'Sorry, we are unable to process your payment at this time. Please retry later.',  'woo-one-click-upsell-funnel' ) );
-
-								} elseif ( 'success' === $payment_result['result'] && ! empty( $payment_result['payment_intent_secret'] ) ) {
-
-									// The intent needs verification here. Upsell will not work.
-									return $payment_result;
-
-								} elseif ( 'success' === $payment_result['result'] ) {
-
-									wps_wocfo_hpos_update_meta_data( $order_id, '_wps_wocuf_stripe_parent_paid', true );
-
-									// Process Subscriptions for pre upsell products from Order.
-									if ( wps_upsell_org_order_contains_subscription( $order_id ) && wps_upsell_org_pg_supports_subs( $order_id ) ) {
-
-										// If upsell parent order is paid then activate subscriptions.
-										WC_Subscriptions_Manager::activate_subscriptions_for_order( $order );
-									}
-
-									$order->update_status( 'upsell-parent' );
-
-									$this->initial_redirection_to_upsell_offer_and_triggers( $order_id, $wps_wocuf_pro_single_funnel, $result );
-								}
+								$this->initial_redirection_to_upsell_offer_and_triggers( $order_id, $wps_wocuf_pro_single_funnel, $result );
+								return;
+								
 							}
 						}
 					} else {
@@ -1703,7 +1638,18 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 					}
 				}
 			}
-		} else {
+		} 
+		elseif( 'stripe_cc' === $payment_method || 'stripe' === $payment_method  ) {
+			$_POST = wps_wocfo_hpos_get_meta_data( $order_id, '_post_data', true );
+
+			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
+			$stripe_class = $available_gateways[ $payment_method ];
+			$payment_result = $stripe_class->process_payment( $order_id, false, true );
+
+			return 	$payment_result ;
+			
+		} 
+		else {
 			// For cron - Payment initialized.
 			wps_wocfo_hpos_delete_meta_data( $order_id, 'wps_ocufp_upsell_initialized' );
 			$result = '';
