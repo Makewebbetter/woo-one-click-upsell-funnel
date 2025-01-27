@@ -617,7 +617,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 					$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
 
-					if ( 'stripe_cc' === $payment_method  || 'stripe' === $payment_method ) {
+					if ( 'stripe_cc' === $payment_method ) {
 
 						$checkout_nonce = ! empty( $_POST['checkout_order_processed_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['checkout_order_processed_nonce'] ) ) : '';
 
@@ -1592,54 +1592,8 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 		$payment_method = $order->get_payment_method();
 
-		if ( 'stripe' === $payment_method ) { // If Payment Method is Official Stripe.
-
-			// Before initiating offer payment set payment complete flag open.
-			wps_wocfo_hpos_delete_meta_data( $order_id, '_wps_wocuf_stripe_parent_initiating' );
-
-			$stripe_compat  = new WPS_Stripe_Payment_Gateway();
-			$payment_result = $stripe_compat->process_upsell_payment( $order_id );
-
-			$order = wc_get_order( $order_id );
-
-			// Check if succesful.
-			if ( true === $payment_result ) {
-
-				// Handle success payment.
-				if ( 'processing' === $order->get_status() ) {
-
-					$stripe_obj = new WC_Gateway_Stripe();
-					if ( wps_upsell_org_order_contains_subscription( $order_id ) && wps_upsell_org_pg_supports_subs( $order_id ) ) {
-
-						WC_Subscriptions_Manager::activate_subscriptions_for_order( $order );
-					}
-
-					// Process WPS Subscriptions for pre upsell products from Order.
-					if ( class_exists( 'Subscriptions_For_Woocommerce_Compatiblity' ) && true === Subscriptions_For_Woocommerce_Compatiblity::pg_supports_subs( $order_id ) && true === Subscriptions_For_Woocommerce_Compatiblity::order_contains_subscription( $order_id ) ) {
-						$subs_compatibility = new Subscriptions_For_Woocommerce_Compatiblity( 'Subscriptions_For_Woocommerce', '1.0.1' );
-						$subs_compatibility->activate_subs_after_upsell( $order_id );
-					}
-
-					return array(
-						'result'   => 'success',
-						'redirect' => $stripe_obj->get_return_url( $order ),
-					);
-				}
-			} else {
-
-				// Handle failed payment.
-				if ( 'upsell-failed' === $order->get_status() ) {
-					$result = $this->wps_wocuf_pro_expire_offer_on_failed_upsell_payment( $order );
-
-					if ( class_exists( 'Subscriptions_For_Woocommerce_Compatiblity' ) && true === Subscriptions_For_Woocommerce_Compatiblity::pg_supports_subs( $order_id ) && true === Subscriptions_For_Woocommerce_Compatiblity::order_contains_subscription( $order_id ) ) {
-
-						/*delete failed order subscription*/
-						wps_sfw_delete_failed_subscription( $order_id );
-					}
-				}
-			}
-		} 
-		elseif( 'stripe_cc' === $payment_method || 'stripe' === $payment_method  ) {
+		
+		if( 'stripe_cc' === $payment_method  ) {
 			$_POST = wps_wocfo_hpos_get_meta_data( $order_id, '_post_data', true );
 
 			$available_gateways = WC()->payment_gateways->get_available_payment_gateways();
@@ -1732,7 +1686,7 @@ class Woocommerce_One_Click_Upsell_Funnel_Public {
 
 			$gateway = new WPS_Wocuf_Pro_Stripe_Gateway_Admin();
 
-		} elseif ( 'stripe' === $order->get_payment_method() ) {
+		} elseif ( 'stripe_cc' === $order->get_payment_method() ) {
 
 			$gateway = new WC_Gateway_Stripe();
 		}

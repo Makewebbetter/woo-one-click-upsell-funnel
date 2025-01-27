@@ -136,7 +136,6 @@ class Woocommerce_One_Click_Upsell_Funnel {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-one-click-upsell-funnel-global-functions.php';
 		
-		
 		/**
 		 * The class responsible for the Onboarding functionality.
 		 */
@@ -149,16 +148,12 @@ class Woocommerce_One_Click_Upsell_Funnel {
 
 			$this->onboard = new WPSwings_Onboarding_Helper();
 		}
-
 		
 		/**
 		 * The file responsible for defining Woocommerce Subscriptions compatibility
 		 * and handling functions.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-woocommerce-one-click-upsell-funnel-org-subs-comp.php';
-
-
-
 
 		/**
 		 * The file responsible for Upsell Sales by Funnel - Data handling and Stats.
